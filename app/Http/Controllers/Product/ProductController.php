@@ -6,6 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
+
 class ProductController extends ApiController
 {
     /**
@@ -31,5 +32,7 @@ class ProductController extends ApiController
     {
         return $this->showOne($product);
     }
+
+    
 
 }

@@ -34,6 +34,12 @@ class User extends Authenticatable
         'admin'
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'verification_token'
+    ];
+
     #mutador
 
     public function setNameAttribute($value){
@@ -55,11 +61,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'verification_token'
-    ];
+    
 
     
 
