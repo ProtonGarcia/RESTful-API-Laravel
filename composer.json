@@ -9,7 +9,7 @@
         "laravel/framework": "5.4.*",
         "laravel/homestead": "^11.0",
         "laravel/tinker": "~1.0",
-        "spatie/laravel-fractal": "4.5.0"
+        "spatie/laravel-fractal": "3.5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
