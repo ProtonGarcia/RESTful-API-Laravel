@@ -4,9 +4,7 @@ namespace App;
 
 use App\Scopes\BuyerScope;
 use App\Transaction;
-
-
-
+use App\Transformers\BuyerTransformer;
 
 class Buyer extends User
 {
@@ -21,5 +19,7 @@ class Buyer extends User
     {
         return $this->hasMany(Transaction::class);
     }
-    
+
+    #transformador
+    public $transformer = BuyerTransformer::class;
 }

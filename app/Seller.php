@@ -3,6 +3,7 @@
 namespace App;
 use App\Product;
 use App\Scopes\SellerScope;
+use App\Transformers\SellerTransformer;
 
 class Seller extends User
 {
@@ -16,4 +17,7 @@ class Seller extends User
     {
         return $this->hasMany(Product::class);
     }
+
+     #transformador
+     public $transformer = SellerTransformer::class;
 }

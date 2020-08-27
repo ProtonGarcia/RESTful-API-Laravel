@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,11 +21,6 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
     
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
@@ -40,8 +36,10 @@ class User extends Authenticatable
         'verification_token'
     ];
 
-    #mutador
+    #transformador
+    public $transformer = UserTransformer::class;
 
+    #mutador
     public function setNameAttribute($value){
         $this->attributes['name'] = strtolower($value);
     }
@@ -56,12 +54,6 @@ class User extends Authenticatable
        return ucwords($value);
     }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    
 
     
 

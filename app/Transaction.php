@@ -3,7 +3,7 @@
 namespace App;
 use App\Buyer;
 use App\Product;
-
+use App\Transformers\TransactionTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,4 +28,7 @@ class Transaction extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+     #transformador
+     public $transformer = TransactionTransformer::class;
 }
