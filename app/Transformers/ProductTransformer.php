@@ -24,6 +24,28 @@ class ProductTransformer extends TransformerAbstract
             'fecha_creacion' => (string)$product->created_at,
             'fecha_modificacion' => (string)$product->updated_at,
             'fecha_eliminacion' => isset($product->deleted_at) ? (string)$product->deleted_at : null,
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('products.show', $product->id)
+                ],
+                [
+                    'rel' => 'product.buyers',
+                    'href' => route('products.buyers.index', $product->id)
+                ],
+                [
+                    'rel' => 'product.categories',
+                    'href' => route('products.categories.index', $product->id)
+                ],
+                [
+                    'rel' => 'product.transactions',
+                    'href' => route('products.transactions.index', $product->id)
+                ],
+                [
+                    'rel' => 'product.transactions',
+                    'href' => route('sellers.show', $product->seller_id)
+                ]
+                ],
         ];
     }
 
