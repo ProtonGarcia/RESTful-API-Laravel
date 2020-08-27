@@ -19,6 +19,9 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $dates = ['deleted_at'];
+
+    #transformador
+    public $transformer = UserTransformer::class;
     
 
     protected $fillable = [
@@ -36,8 +39,7 @@ class User extends Authenticatable
         'verification_token'
     ];
 
-    #transformador
-    public $transformer = UserTransformer::class;
+    
 
     #mutador
     public function setNameAttribute($value){

@@ -30,19 +30,13 @@ trait ApiResponser
 
         $transformer = $collection->first()->transformer;
 
+        $collection = $this->filterData($collection, $transformer);
+        $collection = $this->sortData($collection, $transformer);
+
+        $collection = $this->paginate($collection);
+        $collection = $this->cacheResponse($collection);
+
         $collection = $this->transformData($collection, $transformer);
-
-
-        #Los metodos funcionan bien pero por separado
-
-        //$collection = $this->filterData($collection);
-        //$collection = $this->sortData($collection);
-
-
-
-        //$collection = $this->paginate($collection);
-        //$collection = $this->cacheResponse($collection);
-
         return $this->successResponse($collection, $code);
     }
 
@@ -66,24 +60,26 @@ trait ApiResponser
         return $transformation->toArray();
     }
 
-    protected function sortData(Collection $collection)
+    protected function sortData(Collection $collection, $transformer)
     {
         if (request()->has('sort_by')) {
-            $attribute = request()->sort_by;
+            $attribute = $transformer::originalAttribute(request()->sort_by);
 
             $collection = $collection->sortBy->{$attribute};
         }
         return $collection;
     }
 
-    protected function filterData(Collection $collection)
+    protected function filterData(Collection $collection, $transformer)
     {
-        foreach (request()->query() as $key => $value) {
+        foreach (request()->query() as $query => $value) {
+            $attribute = $transformer::originalAttribute($query);
 
-            if (isset($key, $value)) {
-                $collection = $collection->where($key, $value);
+            if (isset($attribute, $value)) {
+                $collection = $collection->where($attribute, $value);
             }
         }
+
         return $collection;
     }
 
@@ -97,12 +93,7 @@ trait ApiResponser
 
         $page = LengthAwarePaginator::resolveCurrentPage();
 
-        $perPage = 100;
-        if (request()->has('per_page')) {
-            $perPage = (int) request()->per_page;
-        }
-
-
+        $perPage = request()->has('per_page') ? (int) request()->per_page : 50;
 
         $results = $collection->slice(($page - 1) * $perPage, $perPage);
 
@@ -126,9 +117,9 @@ trait ApiResponser
 
         $queryString = http_build_query($queryParams);
 
-        $fullUrl = "{url}?{$queryString}";
+        $fullUrl = "{$url}?{$queryString}";
 
-        return Cache::remember($fullUrl, 10 / 60, function () use ($data) {
+        return Cache::remember($fullUrl, 30 / 60, function () use ($data) {
             return $data;
         });
     }
