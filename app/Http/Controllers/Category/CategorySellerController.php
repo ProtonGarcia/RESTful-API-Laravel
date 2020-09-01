@@ -8,6 +8,10 @@ use App\Http\Controllers\ApiController;
 
 class CategorySellerController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      *Lista de los vendedores de una categoria especifica
      *obtener la lista de transacciones por categoria

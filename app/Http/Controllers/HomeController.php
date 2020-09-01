@@ -25,4 +25,19 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function myTokens()
+    {
+        return view('home.personal-tokens');
+    }
+
+    public function myClients()
+    {
+        return view('home.personal-clients');
+    }
+
+    public function myAuthorizedClients()
+    {
+        return view('home.authorized-clients');
+    }
 }

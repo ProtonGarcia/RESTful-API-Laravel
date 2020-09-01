@@ -6,9 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "guzzlehttp/guzzle": "^6.0",
         "laravel/framework": "5.4.*",
         "laravel/homestead": "^11.1",
+        "laravel/passport": "3.0.1",
         "laravel/tinker": "~1.0",
+        "paragonie/random_compat": "2.*",
         "spatie/laravel-fractal": "3.5.0"
     },
     "require-dev": {

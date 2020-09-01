@@ -23,10 +23,10 @@ $this->post('login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
-/*
-$this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-$this->post('register', 'Auth\RegisterController@register');
-*/
+
+$this->get('register','HomeController@index')->name('register');
+$this->post('register','HomeController@index');
+
 
 // Password Reset Routes...
 $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -34,6 +34,10 @@ $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
+
+Route::get('/home/my-tokens', 'HomeController@myTokens')->name('personal-token');
+Route::get('/home/my-clients', 'HomeController@myClients')->name('personal-clients');
+Route::get('/home/my-authorized-clients', 'HomeController@myAuthorizedClients')->name('authorized-clients');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function(){

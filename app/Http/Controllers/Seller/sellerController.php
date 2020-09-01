@@ -9,6 +9,11 @@ use App\Seller;
 class sellerController extends ApiController
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index()
     {
         $vendedores = Seller::has('products')->get();

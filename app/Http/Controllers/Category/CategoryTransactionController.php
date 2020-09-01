@@ -8,6 +8,11 @@ use App\Http\Controllers\ApiController;
 
 class CategoryTransactionController extends ApiController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      *
      *obtener la lista de transacciones por categoria

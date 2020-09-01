@@ -8,6 +8,11 @@ use App\Http\Controllers\ApiController;
 
 class SellerCategoryController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     /**
      * obtener la lista de categorias en las que un vendedor ha realizado una transaccion o venta.
      * Lista de compradores de un vendedor especifico

@@ -13,8 +13,9 @@ class userController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
-        $this->middleware('transform.input:'.UserTransformer::class)->only(['store', 'update']);
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+        $this->middleware('auth:api')->except(['store', 'verify', 'resend']);
+        $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
     }
 
     /**
@@ -63,7 +64,7 @@ class userController extends ApiController
 
         //return response()->json(['data' => $usuario], 201);
 
-        return $this->showOne($usuario,201);
+        return $this->showOne($usuario, 201);
     }
 
     /**
@@ -76,7 +77,7 @@ class userController extends ApiController
     {
         // $usuario = User::findOrFail($id);
 
-       
+
         return $this->showOne($user);
     }
 
@@ -162,7 +163,6 @@ class userController extends ApiController
     {
         if ($user->isVerified()) {
             return $this->errorResponse('Este usuario ya es verificado', 409);
-
         }
 
         Retry(5, function () use ($user) {

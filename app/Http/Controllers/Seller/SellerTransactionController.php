@@ -8,6 +8,11 @@ use App\Http\Controllers\ApiController;
 
 class SellerTransactionController extends ApiController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      * Transacciones que un vendedor ha realizado
      *

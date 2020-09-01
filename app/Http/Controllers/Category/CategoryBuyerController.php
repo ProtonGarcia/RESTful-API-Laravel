@@ -8,6 +8,11 @@ use App\Http\Controllers\ApiController;
 
 class CategoryBuyerController extends ApiController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
     /**
      * Compradores de un categoria especifica
      *

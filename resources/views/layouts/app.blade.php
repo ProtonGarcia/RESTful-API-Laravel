@@ -36,7 +36,11 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if(Auth::check())
+                            <li><a href="{{route('personal-token')}}">My tokens</a></li>
+                            <li><a href="{{route('personal-clients')}}">My clients</a></li>
+                            <li><a href="{{route('authorized-clients')}}">Authorized clients</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
