@@ -1415,7 +1415,7 @@ Vue.component('passport-clients', __webpack_require__(48));
 Vue.component('passport-authorized-clients', __webpack_require__(53));
 
 var app = new Vue({
-    el: '#app'
+  el: '#app'
 });
 
 /***/ }),

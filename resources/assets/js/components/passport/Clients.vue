@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <!-- Form Errors -->
+                        <!-- Form Errors -->    
                         <div class="alert alert-danger" v-if="createForm.errors.length > 0">
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
