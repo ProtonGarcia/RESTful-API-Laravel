@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -72,6 +73,6 @@ class User extends Authenticatable
     }
 
     public static function verificationTokenGenerator(){
-        return str_random(40);
+        return Str::random(40);
     }
 }
