@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Transformers\ProductTransformer;
 use App\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -16,7 +17,8 @@ class SellerProductController extends ApiController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('transform.input:'.ProductTransformer::class)->only(['store', 'update']);
+        $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+        $this->middleware('scope:manage-products')->except('index');
     }
 
 
@@ -27,9 +29,13 @@ class SellerProductController extends ApiController
      */
     public function index(Seller $seller)
     {
-        $products = $seller->products;
+        if (request()->user()->tokenCan('read-general') || request()->user()->tokenCan('manage-products')) {
+            $products = $seller->products;
+            return $this->showAll($products);
+        }
 
-        return $this->showAll($products);
+        throw new AuthenticationException;        
+        
     }
 
 
@@ -79,7 +85,7 @@ class SellerProductController extends ApiController
 
         $this->validate($request, $rules);
 
-        $this->sellerVerify($seller,$product);
+        $this->sellerVerify($seller, $product);
 
         $product->fill($request->only([
             'name',
@@ -118,7 +124,7 @@ class SellerProductController extends ApiController
      */
     public function destroy(Seller $seller, Product $product)
     {
-        $this->sellerVerify($seller,$product);
+        $this->sellerVerify($seller, $product);
 
         Storage::delete($product->image);
 
@@ -127,10 +133,11 @@ class SellerProductController extends ApiController
         return $this->showOne($product);
     }
 
-    protected function sellerVerify(Seller $seller, Product $product){
+    protected function sellerVerify(Seller $seller, Product $product)
+    {
         if ($seller->id != $product->seller_id) {
             throw new HttpException(422, 'No puedes modificar un producto que no es de tu propiedad');
-           // return $this->errorResponse('No puedes modificar un producto que no es de tu propiedad', 422);
+            // return $this->errorResponse('No puedes modificar un producto que no es de tu propiedad', 422);
         }
     }
 }

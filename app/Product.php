@@ -52,6 +52,6 @@ class Product extends Model
     }
 
      #transformador
-     public $transformer = ProductTransformer::class;
+     public $transformer = ProductTransformer   ::class;
 
 }

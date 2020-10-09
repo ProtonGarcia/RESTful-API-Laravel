@@ -1,0 +1,26 @@
+ip: 192.168.10.11
+memory: 512
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: 'C:\wamp64\www\APIS_PHP\ApiRestful'
+        to: /home/vagrant/code
+sites:
+    -
+        map: apirestful.test
+        to: /home/vagrant/code/public
+databases:
+    - homestead
+features:
+    -
+        mariadb: false
+    -
+        ohmyzsh: false
+    -
+        webdriver: false
+name: apirestful
+hostname: apirestful
