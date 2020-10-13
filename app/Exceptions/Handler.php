@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Barryvdh\Cors\CorsService;
+
 
 class Handler extends ExceptionHandler
 {
@@ -63,6 +65,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+       $response = $this->HandleException($request,$exception);
+
+        //app(CorsService::class)->addActualRequestHeaders();
+        return $response;
+        
+    }
+
+
+    public function HandleException($request, Exception $exception){
         if ($exception instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($exception, $request);
         }
@@ -110,8 +121,6 @@ class Handler extends ExceptionHandler
         }
 
         return $this->errorResponse('Falla inesperada, intentelo luego', 500);
-
-        return parent::render($request, $exception);
     }
 
     /**

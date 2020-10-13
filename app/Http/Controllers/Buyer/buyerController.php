@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Buyer;
 use App\Http\Controllers\ApiController;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 
@@ -14,7 +16,9 @@ class buyerController extends ApiController
     {
         parent::__construct();
         $this->middleware('scope:read-general')->only('show');
+        $this->middleware('can:view,buyer')->only('show');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,16 +26,17 @@ class buyerController extends ApiController
      */
     public function index()
     {
-        $compradores = Buyer::has('transactions')->get();
-
         
+        $this->allowedAdminAction();
+
+        $compradores = Buyer::has('transactions')->get();
         //return response()->json(['data' => $compradores],200);
 
         #haciendo uso del trait
         return $this->showAll($compradores);
     }
 
-  
+
 
     /**
      * Display the specified resource.
@@ -46,6 +51,4 @@ class buyerController extends ApiController
         //return response()->json(['data' => $comprador],200);
         return $this->showOne($buyer);
     }
-
-  
 }

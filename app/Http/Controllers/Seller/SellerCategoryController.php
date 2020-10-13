@@ -12,8 +12,9 @@ class SellerCategoryController extends ApiController
     {
         parent::__construct();
         $this->middleware('scope:read-general')->only('index');
+        $this->middleware('can:view,seller')->only('index');
     }
-    
+
     /**
      * obtener la lista de categorias en las que un vendedor ha realizado una transaccion o venta.
      * Lista de compradores de un vendedor especifico
@@ -23,14 +24,13 @@ class SellerCategoryController extends ApiController
     public function index(Seller $seller)
     {
         $categories = $seller->products()
-        ->with('categories')
-        ->get()
-        ->pluck('categories')
-        ->collapse()
-        ->unique('id')
-        ->values();
+            ->with('categories')
+            ->get()
+            ->pluck('categories')
+            ->collapse()
+            ->unique('id')
+            ->values();
 
         return $this->showAll($categories);
     }
-
 }

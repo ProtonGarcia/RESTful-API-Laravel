@@ -67,6 +67,7 @@ Route::resource('sellers.products', 'Seller\SellerProductController', ['except' 
 /*
     Users
 */
+Route::name('me')->get('users/me', 'User\UserController@me');
 Route::resource('users', 'User\userController', ['except' => ['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');
 Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
